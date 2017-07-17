@@ -28,16 +28,20 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void save(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));//z
+        // закриптовали и установили пользователю пароль
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         Set<Role> roles = new HashSet<>();
+        // присвоение одной роли 1 - user
         roles.add(roleDao.getOne(1L));
+        // установление роли для пользователя
         user.setRoles(roles);
+        //сохранение пользователя
         userDao.save(user);
     }
 
     @Override
     public User findByUsername(String username) {
-
-        return null;
+        // получение пользователя с БД по его имени
+        return userDao.findByUsername(username);
     }
 }
